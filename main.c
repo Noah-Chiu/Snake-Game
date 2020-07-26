@@ -6,6 +6,7 @@
 int i, j, t, x, y, dir, d, tail, head, r1, r2;
 int game = 0;
 int snake[ROW][COLUMN];
+int Position[ROW*COLUMN][2];
 /* run this program using the console pauser or add your own getch, system("pause") or input loop */
 void Field()
 {
@@ -39,7 +40,7 @@ void Field()
 					if(snake[i][j]==head)
 						printf("O");
 					else
-						printf("o",snake[i][j]);
+						printf("o");
 				}
 				else if(snake[i][j]==-1)
 					printf("*");
@@ -73,6 +74,13 @@ void refresh(){
 	Position.Y = 0;
 	SetConsoleCursorPosition(hOut,Position);
 }
+void nm(){
+	snake[Position[0][0]][Position[0][1]] = 0;
+	for(i = 0;i < head-1; i++){
+		Position[i][0] = Position[i+1][0];
+		Position[i][1] = Position[i+1][1];
+	}
+}
 void Movement(){
 	t = tolower(getch_noblock());
 	switch(t){
@@ -101,53 +109,82 @@ void Movement(){
 				dir = 4;
 			break;
 	}
+
 	switch(dir){
 		case 1:
-			head++;
+			//head++;
 			y++;
 			if(y == COLUMN - 1)
 				y = 1;
 			else if(snake[x][y] > 0)
 				game = 1;
-			snake[x][y] = head;
+			if(snake[x][y] == snake[r1][r2])
+				head++;
+			else
+				nm();
+			Position[head-1][0] = x;
+			Position[head-1][1] = y;
+			//snake[x][y] = head;
 			break;
 		case 2:
-			head++;
+			//head++;
 			x++;
 			if(x == ROW - 1)
 				x = 1;
 			else if(snake[x][y] > 0)
 				game = 1;
-			snake[x][y] = head;
+			if(snake[x][y] == snake[r1][r2])
+				head++;
+			else
+				nm();
+			Position[head-1][0] = x;
+			Position[head-1][1] = y;
+			//snake[x][y] = head;
 			break;
 		case 3:
-			head++;
+			//head++;
 			y--;
 			if(y == 0)
 				y = COLUMN-2;
 			else if(snake[x][y] > 0)
 				game = 1;
-			snake[x][y] = head;
+			if(snake[x][y] == snake[r1][r2])
+				head++;
+			else
+				nm();
+			Position[head-1][0] = x;
+			Position[head-1][1] = y;
+			//snake[x][y] = head;
 			break;
 		case 4:
-			head++;
+			//head++;
 			x--;
 			if(x == 0)
 				x = ROW - 2;
 			else if(snake[x][y] > 0)
 				game = 1;
-			snake[x][y] = head;
+			if(snake[x][y] == snake[r1][r2])
+				head++;
+			else
+				nm();
+			Position[head-1][0] = x;
+			Position[head-1][1] = y;
+			//snake[x][y] = head;
 			break;
 		}
+
+		for(i = 0; i < head; i++){
+			snake[Position[i][0]][Position[i][1]] = i+1;
+		}		
 }
-void invisible(){
+/*void invisible(){
 	for(i = 0; i < ROW; i++)
 		for(j = 0; j < COLUMN; j++){
 			if(snake[i][j] == tail)
 				snake[i][j] = 0;
 		}
 	tail++;
-}
+}*/
 void initial()
 {
 	for (i = 0; i < ROW; i++)
@@ -166,6 +203,8 @@ void initial()
 	game = 0;
 	for(i = 0; i < head; i++){
 		snake[x][y+i+1-head] = i+1;
+		Position[i][0] = x;
+		Position[i][1] = y+i+1-head;
 	}
 }
 int main(int argc, char *argv[])
@@ -184,15 +223,15 @@ int main(int argc, char *argv[])
 	system("cls");
 	dir = 1;
 	while(game == 0){
-		while(snake[x][y] == snake[r1][r2]){
-			random();
-			tail--;
-		}
-		Movement();
-		invisible();
 		Field();
+		Movement();
+		if(snake[x][y] == snake[r1][r2]){
+			random();
+			//tail--;
+		}
+		//invisible();
 		refresh();
-		Sleep(60);
+		Sleep(1);
 	}
 	}
 	
