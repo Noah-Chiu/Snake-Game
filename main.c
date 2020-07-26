@@ -16,25 +16,25 @@ void Field()
 			if (i == 0)
 			{
 				if (j == 0)
-					printf("Ã¹Ã");
+					printf("ùİ");
 				else if (j == COLUMN - 1)
-					printf("Ã¹ÃŸ");  
+					printf("ùß");  
 				else
-					printf("Ã¹Ã¹");
+					printf("ùù");
 			}
 			else if (i == ROW - 1)
 			{
 				if (j == 0)
-					printf("Ã¹Ã£");
+					printf("ùã");
 				else if (j == COLUMN - 1)
-					printf("Ã¹Ã¥");
+					printf("ùå");
 				else
-					printf("Ã¹Ã¹");
+					printf("ùù");
 			}
 			else
 			{
 				if (j == 0 || j == COLUMN - 1)
-					printf("Ã¹Ã¸");
+					printf("ùø");
 				else if(snake[i][j]>0){
 					if(snake[i][j]==head)
 						printf("O");
