@@ -1,3 +1,3 @@
 # Snake-Game
- First game I made
- It's made by C
+ <p/>First game I made<br>
+ <p/>It's made by C
